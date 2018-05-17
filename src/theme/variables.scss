@@ -14,6 +14,8 @@ $app-direction: ltr;
 
 @import "ionic.globals";
 
+// $radio-ios-color-on	: red;
+
 
 // Shared Variables
 // --------------------------------------------------
@@ -86,3 +88,7 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+$segment-button-ios-background-color: transparent;
+$segment-button-ios-font-size: 1.2em;
+$segment-button-ios-text-color: #575555;

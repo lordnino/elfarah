@@ -1,0 +1,52 @@
+<ion-content padding>
+  <ion-row>
+    <ion-col (click)="goBack()" col-2 offset-10>
+      <img class="close" src="assets/imgs/login/close.png" alt="">
+    </ion-col>
+  </ion-row>
+  <ion-row class="headling-container">
+    <ion-col col-12 text-center>
+      <img src="assets/imgs/login/hello-again.png" alt="">
+    </ion-col>
+  </ion-row>
+  <ion-row class="form-container">
+    <form [formGroup]="form">
+      <ion-label>
+        <ion-item>
+          <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+        </ion-item>
+        <ion-list formControlName="type" radio-group>
+          <ion-item>
+            <ion-label>Vendor</ion-label>
+            <ion-radio value="vendor"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>User</ion-label>
+            <ion-radio value="user"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </ion-label>
+    </form>
+  </ion-row>
+  <ion-row class="bottom-container">
+    <ion-col col-12>
+      <img (click)="login()" src="assets/imgs/login/login.png" alt="">
+    </ion-col>
+  </ion-row>
+  <ion-row class="bottom-container">
+    <ion-col col-12>
+      <img src="assets/imgs/login/fb_login.png" alt="">
+    </ion-col>
+  </ion-row>
+  <ion-row class="forgot-container">
+    <ion-col col-12 text-center>
+      <img (click)="goToForgotPassword()" tappable src="assets/imgs/login/forgot.png" alt="">
+    </ion-col>
+    <ion-col col-12 text-center>
+      <img (click)="loginAsAGuest()" src="assets/imgs/login/skip.png" alt="">
+    </ion-col>
+  </ion-row>
+</ion-content>
