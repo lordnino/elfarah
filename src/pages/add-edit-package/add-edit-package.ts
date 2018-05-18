@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Base64 } from '@ionic-native/base64';
+
 /**
  * Generated class for the AddEditPackagePage page.
  *
@@ -36,7 +38,8 @@ export class AddEditPackagePage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public vendorsProvider: VendorsProvider,
-    public helperLibrary: IonicLibraryService) {
+    public helperLibrary: IonicLibraryService,
+    private base64: Base64) {
     // console.log(this.navParams.get('data'));
     this.is_edit = this.navParams.get('data').is_edit;
     this.vendor = this.navParams.get('data').vendor;
@@ -59,14 +62,18 @@ export class AddEditPackagePage {
   getImage() {
     const options: CameraOptions = {
       quality: 100,
+      sourceType: 0,
       destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+      // sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     this.camera.getPicture(options).then((imageData) => {
       this.imageUploaded = true;
-      this.imageURI = imageData;
-      this.imageFileName = 'data:image/jpeg;base64,' + imageData;
-      this.vendorsProvider.uploadPackageImage(imageData).subscribe((res: any) => {
+      this.imageFileName = imageData;
+      let imageBase64: any;
+      this.base64.encodeFile(imageData).then((base64File: string) => {
+        imageBase64 = base64File;
+      })
+      this.vendorsProvider.uploadPackageImage(imageBase64).subscribe((res: any) => {
         if (res.status == 200) {
           this.imageId = res.data.id;
         } else {
@@ -98,7 +105,19 @@ export class AddEditPackagePage {
 
   save() {
     if (this.is_edit) {
-      let payload = { "custom": "true", "action": "Vendor_Edit_Package", "token": window.localStorage.getItem('token'), "data": { "package_id": this.package.id, "deal_price": this.packageData.price, "vendor_id": this.vendor.id, "description": this.packageData.desc, "deal_name": this.packageData.name, "image": this.imageId } }
+      let payload = {
+        "custom": "true",
+        "action": "Vendor_Edit_Package",
+        "token": window.localStorage.getItem('token'),
+        "data": {
+          "package_id": this.package.id,
+          "deal_price": this.packageData.price,
+          "vendor_id": this.vendor.id,
+          "description": this.packageData.desc,
+          "deal_name": this.packageData.name,
+          "image": this.imageId
+        }
+      }
       console.log(payload);
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'
@@ -107,7 +126,7 @@ export class AddEditPackagePage {
       this.vendorsProvider.editPackage(payload).subscribe((res: any) => {
         this.navCtrl.pop();
       }, err => console.log(err)
-      , () => loading.dismiss);
+        , () => loading.dismiss);
     } else {
       if (!this.imageId) this.helperLibrary.basictoast('You have to upload an image', 2000, 'bottom');
       else {
@@ -122,7 +141,7 @@ export class AddEditPackagePage {
         this.vendorsProvider.createPackage(payload).subscribe((res: any) => {
           this.navCtrl.pop();
         }, err => console.log(err)
-        , () => loading.dismiss());
+          , () => loading.dismiss());
       }
     }
   }

@@ -6,6 +6,8 @@ import { IonicPage, NavController, NavParams, ToastController, LoadingController
 import { AuthProvider } from '../../providers/auth/auth';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Base64 } from '@ionic-native/base64';
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -41,7 +43,8 @@ export class ProfilePage {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private userProvider: UserProvider) {
+    private userProvider: UserProvider,
+    private base64: Base64) {
     if (this.type == 'user') {
       this.userImage = `http://elfarahapp.com${this.userProfile.profile_image}`;
       this.profile = {
@@ -158,18 +161,23 @@ export class ProfilePage {
   getImage() {
     const options: CameraOptions = {
       quality: 100,
+      sourceType: 0,
       destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+      // sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     this.camera.getPicture(options).then((imageData) => {
       this.imageUploaded = true;
-      this.imageURI = imageData;
-      this.imageFileName = 'data:image/jpeg;base64,' + imageData;
+      // this.imageURI = imageData;
+      this.imageFileName = imageData;
+      let imageBase64;
+      this.base64.encodeFile(imageData).then((base64File: string) => {
+        imageBase64 = base64File;
+      })
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
       loading.present();
-      this.vendorsProvider.uplaodVendorImage(imageData).subscribe((res: any) => {
+      this.vendorsProvider.uplaodVendorImage(imageBase64).subscribe((res: any) => {
         this.getVendorImages();
       }, err => console.log(err)
       , () => loading.dismiss());
@@ -230,17 +238,22 @@ export class ProfilePage {
   uploadUserPic() {
     const options: CameraOptions = {
       quality: 100,
+      sourceType: 0,
       destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+      // sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     this.camera.getPicture(options).then((imageData) => {
-      this.userProfile = imageData;
-      this.imageFileName = 'data:image/jpeg;base64,' + imageData;
+      let imageBase64;
+      this.imageFileName = imageData;
+      this.userImage = imageData;
+      this.base64.encodeFile(imageData).then((base64File: string) => {
+        imageBase64 = base64File;
+      })
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
       loading.present();
-      this.userProvider.uploadProfilePic(imageData).subscribe((res: any) => {
+      this.userProvider.uploadProfilePic(imageBase64).subscribe((res: any) => {
         this.getUserData();
       }, err => console.log(err)
       , () => loading.dismiss());

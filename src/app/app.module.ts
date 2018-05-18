@@ -20,7 +20,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { UserProvider } from '../providers/user/user';
-
+import { Base64 } from '@ionic-native/base64';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,8 @@ import { UserProvider } from '../providers/user/user';
     // FileTransferObject,
     File,
     Camera,
-    UserProvider
+    UserProvider,
+    Base64
   ]
 })
 export class AppModule { }
