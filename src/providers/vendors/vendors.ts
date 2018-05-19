@@ -61,8 +61,8 @@ export class VendorsProvider {
     formData.append('action', 'upload_package_image');
     formData.append('token', window.localStorage.getItem('token'));
     formData.append('upload[]', data);
-    let headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*' });
-    return this.http.post('http://elfarahapp-com.stackstaging.com/Application/rest/get.php', formData, { headers: this.headers });
+    let headers = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' });
+    return this.http.post('http://elfarahapp-com.stackstaging.com/Application/rest/get.php', formData , { headers: headers });
   }
 
   deletePackage(data) {
@@ -103,8 +103,8 @@ export class VendorsProvider {
     formData.append('action', 'upload_vendor_images');
     formData.append('token', window.localStorage.getItem('token'));
     formData.append('upload[]', data);
-    let headers = new HttpHeaders({ 'Content-Type': 'multipart/form-data', 'Access-Control-Allow-Origin': '*' });
-    return this.http.post('http://elfarahapp-com.stackstaging.com/Application/rest/get.php', JSON.stringify(data), { headers: this.headers });
+    let headers = new HttpHeaders({'Access-Control-Allow-Origin': '*' });
+    return this.http.post('http://elfarahapp-com.stackstaging.com/Application/rest/get.php', formData, { headers: headers });
   }
 
   acceptOrder(data) {

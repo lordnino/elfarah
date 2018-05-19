@@ -63,8 +63,7 @@ export class AddEditPackagePage {
     const options: CameraOptions = {
       quality: 100,
       sourceType: 0,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      // sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+      destinationType: this.camera.DestinationType.FILE_URI
     }
     this.camera.getPicture(options).then((imageData) => {
       this.imageUploaded = true;
@@ -74,7 +73,7 @@ export class AddEditPackagePage {
         imageBase64 = base64File;
       })
       this.vendorsProvider.uploadPackageImage(imageBase64).subscribe((res: any) => {
-        if (res.status == 200) {
+        if (res.status.code == 200) {
           this.imageId = res.data.id;
         } else {
           this.helperLibrary.basictoast('Please try again later', 2000, 'bottom');
