@@ -36,13 +36,7 @@ export class UserProvider {
   }
 
   uploadProfilePic(data) {
-    let formData: FormData = new FormData();
-    formData.append('custom', 'true');
-    formData.append('action', 'upload_profile');
-    formData.append('token', window.localStorage.getItem('token'));
-    formData.append('upload[]', data);
-    let headers = new HttpHeaders({'Access-Control-Allow-Origin': '*' });
-    return this.http.post('http://elfarahapp-com.stackstaging.com/Application/rest/get.php', formData, { headers: headers });
+    return this.http.post('http://elfarahapp-com.stackstaging.com/Application/rest/get.php', JSON.stringify(data) , { headers: this.headers });
   }
 
   getAllCategories(data) {

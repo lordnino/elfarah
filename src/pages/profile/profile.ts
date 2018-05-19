@@ -89,7 +89,7 @@ export class ProfilePage {
       this.vendorImages = res.data;
       console.log(this.vendorImages);
     }, err => console.log(err)
-    , () => loading.dismiss());
+      , () => loading.dismiss());
   }
 
   updateUserData() {
@@ -113,7 +113,7 @@ export class ProfilePage {
       this.vendorsProvider.editVendor(payload).subscribe((res: any) => {
         if (res.status.code == 200) this.helperLib.basictoast('Updated data successfully', 2000, 'bottom');
       }, err => this.helperLib.basictoast('Please try again later', 2000, 'bottom')
-      , () => loading.dismiss());
+        , () => loading.dismiss());
     }
   }
 
@@ -131,7 +131,7 @@ export class ProfilePage {
       console.log(userData);
       window.localStorage.setItem('userProfile', JSON.stringify(userData.data[0]));
     }, err => console.log(err)
-    , () => loading.dismiss());
+      , () => loading.dismiss());
   }
 
   updatePassword() {
@@ -154,7 +154,7 @@ export class ProfilePage {
       this.vendorsProvider.changeVendorPassword(payload).subscribe((res: any) => {
         if (res.status.code == 200) this.helperLib.basictoast('Password changes successfullt', 2000, 'bottom');
       }, err => this.helperLib.basictoast('Please try again later', 2000, 'bottom')
-      , () => loading.dismiss());
+        , () => loading.dismiss());
     }
   }
 
@@ -178,9 +178,13 @@ export class ProfilePage {
       });
       loading.present();
       this.vendorsProvider.uplaodVendorImage(imageBase64).subscribe((res: any) => {
+        res.forEach(e => {
+          e.web_path = 'http://elfarahapp.com' + e.web_path
+        })
+        this.vendorImages = res;
         this.getVendorImages();
       }, err => console.log(err)
-      , () => loading.dismiss());
+        , () => loading.dismiss());
     }, (err) => {
       console.log(err);
       this.presentToast(err);
@@ -221,7 +225,7 @@ export class ProfilePage {
             this.vendorsProvider.deleteVendorImage(payload).subscribe((res: any) => {
               this.helperLib.basictoast('Image deleted successfully', 2000, 'bottom');
             }, err => console.log(err)
-            , () => loading.dismiss());
+              , () => loading.dismiss());
           }
         },
         {
@@ -246,17 +250,25 @@ export class ProfilePage {
       let imageBase64;
       this.imageFileName = imageData;
       this.userImage = imageData;
+      let payload: any;
       this.base64.encodeFile(imageData).then((base64File: string) => {
         imageBase64 = base64File;
+        payload = {
+          "custom": "true",
+          "token": window.localStorage.getItem('token'),
+          "action": "upload_package_image",
+          "upload": base64File
+        }
       })
       let loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
       loading.present();
-      this.userProvider.uploadProfilePic(imageBase64).subscribe((res: any) => {
+      this.userProvider.uploadProfilePic(payload).subscribe((res: any) => {
+        this.userImage = `http://elfarahapp.com${res.data[0].web_path}`;
         this.getUserData();
       }, err => console.log(err)
-      , () => loading.dismiss());
+        , () => loading.dismiss());
     }, (err) => {
       console.log(err);
       this.presentToast(err);
