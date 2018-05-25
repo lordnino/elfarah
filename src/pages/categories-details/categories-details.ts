@@ -20,6 +20,9 @@ export class CategoriesDetailsPage {
   cat_details_id: any = window.localStorage.getItem('cat_id');
   cat_details: any;
   rate: any;
+  searchText: any = '';
+  raw_vendors: any;
+  showSearch: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private modalCtrl: ModalController, private loadingCtrl: LoadingController) {
   }
@@ -46,6 +49,7 @@ export class CategoriesDetailsPage {
       res.data.forEach(e => {
         e.web_path = `http://elfarahapp.com${e.web_path}`;
       });
+      this.raw_vendors = res.data;
       this.cat_details = res.data;
       console.log(this.cat_details);
     }, err => console.log(err)
@@ -75,5 +79,26 @@ export class CategoriesDetailsPage {
       }
     })
     // this.navCtrl.push('FilterPage');
+  }
+
+  toggleSearch(){
+    this.showSearch = !this.showSearch;
+  }
+
+  onInput(ev){
+    let filteredArr: any = [];
+    if(this.searchText == ''){
+      this.cat_details = this.raw_vendors;
+    } else {
+      this.raw_vendors.forEach(element => {
+        if(element.vendor_name.toLowerCase().includes(this.searchText.toLowerCase())) filteredArr.push(element);
+      });
+      console.log(filteredArr);
+      this.cat_details = filteredArr;
+    }
+  }
+
+  onCancel(ev){
+    this.cat_details = this.raw_vendors;
   }
 }

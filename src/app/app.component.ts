@@ -28,6 +28,8 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.backgroundColorByHexString('#f06987');
       this.splashScreen.hide();
       if (window.localStorage.getItem('token')) {
         this.userProfile = JSON.parse(window.localStorage.getItem('userProfile'));

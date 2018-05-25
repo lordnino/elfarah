@@ -7,14 +7,26 @@
       <img src="assets/imgs/logo1.png" class="navbar-header-logo" alt="">
     </ion-title>
     <ion-buttons end>
-      <div (click)="goToFilterPage()">
-        <ion-icon class="filter-icon" name="ios-funnel-outline"></ion-icon>
+      <div class="button-containers">
+        <div (click)="toggleSearch()">
+          <ion-icon class="filter-icon" name="md-search"></ion-icon>
+        </div>
+        <div (click)="goToFilterPage()">
+          <ion-icon class="filter-icon" name="ios-funnel-outline"></ion-icon>
+        </div>
       </div>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-row>
+    <ion-col col-12>
+      <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchText" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)"
+        (ionCancel)="onCancel($event)">
+      </ion-searchbar>
+    </ion-col>
+  </ion-row>
   <ion-row *ngIf="cat_details && cat_details.length > 0" no-padding>
     <ion-col *ngFor="let cat of cat_details" (click)="goToCategoryVendor()" col-12 no-padding>
       <div class="cat-outer-container">

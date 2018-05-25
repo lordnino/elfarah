@@ -151,14 +151,17 @@ export class MyPlansPage {
     let payload = {
       "custom": "true",
       "action": "Done_Deal"
-      , "token": window.localStorage.getItem('token')
+      , "token": window.localStorage.getItem('token'),
+      "data": {
+        "order_id": order.id
+      }
     }
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
     loading.present();
     this.userService.acceptOrder(payload).subscribe((res: any) => {
-
+      this.getOrders();
     }, err => console.log(err)
       , () => loading.dismiss());
   }
@@ -249,4 +252,25 @@ export class MyPlansPage {
       , () => loading.dismiss());
   }
 
+  budgetCalc() {
+    let budget: number = 0;
+    console.log(this.done_deals);
+    this.done_deals.forEach(e => {
+      budget += +e.deal_price;
+    })
+    let alert = this.alertCtrl.create({
+      title: 'Budget Calculator',
+      message: `Your budget is ${budget} EGP`,
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
 }

@@ -19,6 +19,9 @@ export class CategoriesPage {
 
   sliderImgs: any;
   categories: any;
+  searchText: any = '';
+  raw_categories: any;
+  showSearch: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private helperLib: IonicLibraryService, private loadingCtrl: LoadingController) {
   }
@@ -64,6 +67,7 @@ export class CategoriesPage {
       res.data.forEach(e => {
         e.Images = `http://elfarahapp.com${e.Images}`;
       })
+      this.raw_categories = res.data;
       this.categories = res.data;
       console.log(this.categories);
     }, err => console.log(err)
@@ -73,6 +77,27 @@ export class CategoriesPage {
   goToCatDetails(cat){
     window.localStorage.setItem('cat_id', cat.id);
     this.navCtrl.push('CategoriesDetailsPage');
+  }
+
+  toggleSearch(){
+    this.showSearch = !this.showSearch;
+  }
+
+  onInput(ev){
+    let filteredArr: any = [];
+    if(this.searchText == ''){
+      this.categories = this.raw_categories;
+    } else {
+      this.raw_categories.forEach(element => {
+        if(element.Name.toLowerCase().includes(this.searchText.toLowerCase())) filteredArr.push(element);
+      });
+      console.log(filteredArr);
+      this.categories = filteredArr;
+    }
+  }
+
+  onCancel(ev){
+    this.categories = this.raw_categories;
   }
 
 }

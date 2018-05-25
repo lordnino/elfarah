@@ -6,6 +6,11 @@
     <ion-title>
       <img src="assets/imgs/logo1.png" class="navbar-header-logo" alt="">
     </ion-title>
+    <ion-buttons end>
+      <div (click)="toggleSearch()">
+        <ion-icon class="filter-icon" name="md-search"></ion-icon>
+      </div>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -29,7 +34,9 @@
   </ion-row>
   <ion-row class="cat-outer-container" no-padding>
     <ion-col col-12 no-padding>
-      <h4 class="mont-regular cat-label">Categories</h4>
+      <h4 class="mont-light cat-label">Categories</h4>
+      <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchText" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+      </ion-searchbar>
     </ion-col>
     <ion-col *ngFor="let cat of categories" (click)="goToCatDetails(cat)" col-12 no-padding>
       <div class="cat-container">
