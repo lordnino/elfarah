@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams, LoadingController, ToastController
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Base64 } from '@ionic-native/base64';
+import { normalizeURL } from 'ionic-angular';
 
 /**
  * Generated class for the AddEditPackagePage page.
@@ -67,7 +68,7 @@ export class AddEditPackagePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       this.imageUploaded = true;
-      this.imageFileName = imageData;
+      this.imageFileName = normalizeURL(imageData);
       let imageBase64: any;
       this.base64.encodeFile(imageData).then((base64File: string) => {
         imageBase64 = base64File;

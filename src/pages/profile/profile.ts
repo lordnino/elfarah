@@ -7,6 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Base64 } from '@ionic-native/base64';
+import { normalizeURL } from 'ionic-angular';
 
 /**
  * Generated class for the ProfilePage page.
@@ -169,7 +170,7 @@ export class ProfilePage {
     this.camera.getPicture(options).then((imageData) => {
       this.imageUploaded = true;
       // this.imageURI = imageData;
-      this.imageFileName = imageData;
+      this.imageFileName = normalizeURL(imageData);
       let imageBase64;
       this.base64.encodeFile(imageData).then((base64File: string) => {
         imageBase64 = base64File;
@@ -250,8 +251,8 @@ export class ProfilePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       let imageBase64;
-      this.imageFileName = imageData;
-      this.userImage = imageData;
+      this.imageFileName = normalizeURL(imageData);
+      this.userImage = normalizeURL(imageData);
       let payload: any;
       this.base64.encodeFile(imageData).then((base64File: string) => {
         imageBase64 = base64File;
