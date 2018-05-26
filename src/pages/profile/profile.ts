@@ -2,7 +2,7 @@ import { UserProvider } from './../../providers/user/user';
 import { IonicLibraryService } from './../../providers/ionic-lib.service';
 import { VendorsProvider } from './../../providers/vendors/vendors';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController, Events } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -44,7 +44,8 @@ export class ProfilePage {
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private userProvider: UserProvider,
-    private base64: Base64) {
+    private base64: Base64,
+    private events: Events) {
     if (this.type == 'user') {
       this.userImage = `http://elfarahapp.com${this.userProfile.profile_image}`;
       this.profile = {
@@ -178,6 +179,7 @@ export class ProfilePage {
       });
       loading.present();
       this.vendorsProvider.uplaodVendorImage(imageBase64).subscribe((res: any) => {
+        this.events.publish('image-uploaded', imageData);
         res.forEach(e => {
           e.web_path = 'http://elfarahapp.com' + e.web_path
         })
@@ -265,6 +267,7 @@ export class ProfilePage {
       });
       loading.present();
       this.userProvider.uploadProfilePic(payload).subscribe((res: any) => {
+        this.events.publish('image-uploaded', imageData);
         this.userImage = `http://elfarahapp.com${res.data[0].web_path}`;
         this.getUserData();
       }, err => console.log(err)

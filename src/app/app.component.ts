@@ -98,6 +98,10 @@ export class MyApp {
         ]
       }
     })
+    this.events.subscribe('image-uploaded', (image) => {
+      console.log(image);
+      this.userImage = image;
+    });
   }
 
   ngOnInit() {
