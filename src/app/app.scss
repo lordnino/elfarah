@@ -120,8 +120,7 @@
     margin: 5px 0px;
   }
   .menu-link {
-    color: #fff;
-    // padding-left: 55px;
+    color: #fff; // padding-left: 55px;
     text-align: center;
     font-size: 2em; // margin-top: 14px;
   }
@@ -135,11 +134,12 @@
   font-family: 'MontLight';
 }
 
-.toolbar-ios{
+.toolbar-ios {
   min-height: 53px;
 }
 
-.ion-label, .label-ios {
+.ion-label,
+.label-ios {
   font-family: "MontLight", sans-serif !important;
 }
 
@@ -161,6 +161,16 @@ ion-icon[name='menu'] {
   color: #fff;
 }
 
-.segment-ios{
+.segment-ios {
   font-family: sans-serif;
+}
+
+.ios .menu-inner {
+  background: transparent;
+}
+
+ion-menu {
+  .content-ios {
+    background: none;
+  }
 }
