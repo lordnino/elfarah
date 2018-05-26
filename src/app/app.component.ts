@@ -68,6 +68,7 @@ export class MyApp {
       else this.rootPage = 'IntroPage';
     });
     this.events.subscribe('user:login', (type) => {
+      this.userType = window.localStorage.getItem('type');
       this.userProfile = JSON.parse(window.localStorage.getItem('userProfile'));
       console.log(this.userProfile);
       if (this.userProfile.profile_image) {
