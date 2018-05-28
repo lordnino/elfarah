@@ -27,7 +27,8 @@ export class CategoriesDetailsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider, private modalCtrl: ModalController, private loadingCtrl: LoadingController) {
   }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    console.log('entered the view');
     this.getCatDetails();
   }
 

@@ -169,8 +169,8 @@ export class ProfilePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       this.imageUploaded = true;
-      // this.imageURI = imageData;
-      this.imageFileName = normalizeURL(imageData);
+      // this.imageFileName = normalizeURL(imageData);
+      this.userImage = 'data:image/jpg;base64,' + imageData;
       let imageBase64;
       this.base64.encodeFile(imageData).then((base64File: string) => {
         imageBase64 = base64File;
@@ -251,8 +251,8 @@ export class ProfilePage {
     }
     this.camera.getPicture(options).then((imageData) => {
       let imageBase64;
-      this.imageFileName = normalizeURL(imageData);
-      this.userImage = normalizeURL(imageData);
+      this.userImage = 'data:image/jpg;base64,' + imageData;
+      // this.userImage = normalizeURL(imageData);
       let payload: any;
       this.base64.encodeFile(imageData).then((base64File: string) => {
         imageBase64 = base64File;
