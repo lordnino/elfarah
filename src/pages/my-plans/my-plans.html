@@ -70,7 +70,7 @@
             <ion-col class="left-side-deal" text-center no-padding col-6>
               <div class="package-title mont-light">Your Package</div>
               <div class="package-name mont-black">{{p?.pack_name}}</div>
-              <div class="view-desc mont-light">View description</div>
+              <div (click)="goToViewDesc()" class="view-desc mont-light">View description</div>
             </ion-col>
             <ion-col class="right-side-deal" col-6 no-padding text-center>
               <div>
@@ -139,7 +139,7 @@
             <ion-col class="left-side-deal" text-center no-padding col-6>
               <div class="package-title mont-light">Your Package</div>
               <div class="package-name mont-black">{{d?.pack_name}}</div>
-              <div class="view-desc mont-light">View description</div>
+              <div (click)="goToViewDesc(d)" class="view-desc mont-light">View description</div>
             </ion-col>
             <ion-col class="right-side-deal" col-6 no-padding text-center>
               <div>

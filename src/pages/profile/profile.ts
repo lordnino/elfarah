@@ -48,7 +48,11 @@ export class ProfilePage {
     private base64: Base64,
     private events: Events) {
     if (this.type == 'user') {
-      this.userImage = `http://elfarahapp.com${this.userProfile.profile_image}`;
+      if(this.userProfile.profile_image != null){
+        this.userImage = `http://elfarahapp.com${this.userProfile.profile_image}`;
+      } else {
+        this.userImage = 'https://cdn1.iconfinder.com/data/icons/business-charts/512/customer-512.png';
+      }
       this.profile = {
         first: this.userProfile.name.split(' ')[0],
         last: this.userProfile.name.split(' ')[1],

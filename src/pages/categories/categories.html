@@ -34,7 +34,7 @@
   </ion-row>
   <ion-row class="cat-outer-container" no-padding>
     <ion-col col-12 no-padding>
-      <h4 class="mont-light cat-label">Categories</h4>
+      <h4 class="mont-bold cat-label">Categories</h4>
       <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchText" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
       </ion-searchbar>
     </ion-col>
@@ -42,7 +42,7 @@
       <div class="cat-container">
         <img class="cat-img" [src]="cat.Images" alt="">
         <div class="cat-title">
-          <h3>
+          <h3 class="mont-bold">
             {{cat.Name}}
           </h3>
         </div>

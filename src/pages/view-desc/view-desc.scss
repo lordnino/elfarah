@@ -1,0 +1,30 @@
+page-view-desc {
+  ion-content {
+    width: 87%;
+    height: auto;
+    min-height: 25%;
+    margin-top: 73%;
+    margin-left: 6%;
+    margin-right: auto;
+    background-image: url('../assets/imgs/orders/deal-bg.png');
+    background-size: cover;
+  }
+  .inner-dev {
+    height: 100%;
+    width: 100%;
+    margin-left: 5%;
+  }
+  .content-ios{
+    background-color: transparent;
+  }
+  .close-btn{
+    position: absolute;
+    bottom: 0px;
+    margin-left: 9px;
+  }
+  span.button-inner{
+    font-size: 1.4em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+  }
+}

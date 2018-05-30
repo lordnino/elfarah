@@ -1,3 +1,4 @@
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { UserProvider } from './../../providers/user/user';
 import { IonicLibraryService } from './../../providers/ionic-lib.service';
 import { Component } from '@angular/core';
@@ -25,7 +26,7 @@ export class MyPlansPage {
   done_deals: any = [];
   pending: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private helperLib: IonicLibraryService, private userService: UserProvider, private alertCtrl: AlertController, private callNumber: CallNumber, private sms: SMS, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private helperLib: IonicLibraryService, private userService: UserProvider, private alertCtrl: AlertController, private callNumber: CallNumber, private sms: SMS, private loadingCtrl: LoadingController, private modalCtrl: ModalController) {
   }
 
   ionViewWillEnter() {
@@ -40,8 +41,8 @@ export class MyPlansPage {
   getOrders() {
     let payload = {
       "custom": "true",
-      "action": "User_Orders"
-      , "token": window.localStorage.getItem('token')
+      "action": "User_Orders",
+      "token": window.localStorage.getItem('token')
     }
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -123,9 +124,9 @@ export class MyPlansPage {
           handler: data => {
             let payload = {
               "custom": "true",
-              "action": "Edit_Note"
-              , "token": window.localStorage.getItem('token')
-              , "data":
+              "action": "Edit_Note",
+              "token": window.localStorage.getItem('token'),
+              "data":
                 {
                   "order_id": order.id,
                   "note": data.Note
@@ -150,8 +151,8 @@ export class MyPlansPage {
   acceptOrder(order) {
     let payload = {
       "custom": "true",
-      "action": "Done_Deal"
-      , "token": window.localStorage.getItem('token'),
+      "action": "Done_Deal",
+      "token": window.localStorage.getItem('token'),
       "data": {
         "order_id": order.id
       }
@@ -272,5 +273,14 @@ export class MyPlansPage {
       ]
     });
     alert.present();
+  }
+
+  goToViewDesc(data) {
+    console.log('called');
+    let modal = this.modalCtrl.create('ViewDescPage', {
+      data: data
+    });
+    modal.present();
+    // modal.createAndPresentOverlay('ViewDesc');
   }
 }
